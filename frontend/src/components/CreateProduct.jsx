@@ -30,7 +30,7 @@ function CreateProduct() {
         image: "",
       });
     } else {
-      console.log(message);
+      alert(message);
     }
   };
 
