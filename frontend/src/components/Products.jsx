@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useProductStore } from "../../store/product";
+import { useProductStore } from "../store/product";
 import Product from "./Product";
 
 function Products() {

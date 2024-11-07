@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useProductStore } from "../../store/product";
+import { useProductStore } from "../store/product";
 
 function Product({ product }) {
   const { deleteProduct, updateProduct } = useProductStore();

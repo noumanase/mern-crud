@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useProductStore } from "../../store/product";
+import { useProductStore } from "../store/product";
 
 function CreateProduct() {
   const { createProduct } = useProductStore();
