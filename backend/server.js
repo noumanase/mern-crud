@@ -25,5 +25,4 @@ if (process.env.NODE_ENV === "production") {
 
 app.listen(PORT, () => {
   connectDB();
-  console.log("Server stared at http://localhost:5000");
 });
