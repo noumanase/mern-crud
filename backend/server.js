@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import productRouter from "./routes/product.route.js";
+import userRouter from "./routes/user.route.js";
 import path from "path";
 
 dotenv.config();
@@ -13,6 +14,7 @@ const __dirname = path.resolve(); // root directory location
 
 app.use(express.json()); // allows to use JSON data in the req.body
 
+app.use("/api/user", userRouter);
 app.use("/api/products", productRouter);
 
 if (process.env.NODE_ENV === "production") {
