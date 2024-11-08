@@ -62,3 +62,19 @@ export const signinUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+export const getUserInfo = async (req, res) => {
+  const user = req.body;
+
+  try {
+    const userFound = await User.findById(req.user.id);
+    if (userFound) {
+      res.status(200).json({ success: true, data: { ...userFound._doc } });
+    } else {
+      res.status(404).json({ success: false, message: "User not found" });
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
