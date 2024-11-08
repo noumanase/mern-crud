@@ -24,9 +24,19 @@ export const useProductStore = create((set) => ({
   },
 
   fetchProducts: async () => {
-    const res = await fetch("/api/products");
-    const data = await res.json();
-    set({ products: data.data });
+    try {
+      const res = await fetch("/api/products", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MmRmMzU4NjZjOGE0MDE5MzM2NWE5MiIsIm5hbWUiOiJub3VtYW4xIiwiaWF0IjoxNzMxMDY0ODYyLCJleHAiOjE3MzEwNjg0NjJ9.tcmpBJsRIKYc4od97uclIn-HrBbVVcMaaO-A9J2AQuQ`,
+        },
+      });
+      const data = await res.json();
+      set({ products: data.data });
+    } catch (error) {
+      console.log("error; , ", error);
+    }
   },
 
   deleteProduct: async (pid) => {

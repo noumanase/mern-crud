@@ -3,24 +3,37 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Signup from "../components/Signup";
 import Signin from "../components/Signin";
 import App from "../App";
+import Navbar from "../components/Navbar";
 
-function Router({ children }) {
+function AppRouter() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App />,
+      element: (
+        <Navbar>
+          <App />
+        </Navbar>
+      ),
     },
     {
       path: "/signup",
-      element: <Signup />,
+      element: (
+        <Navbar>
+          <Signup />
+        </Navbar>
+      ),
     },
     {
       path: "/signin",
-      element: <Signin />,
+      element: (
+        <Navbar>
+          <Signin />
+        </Navbar>
+      ),
     },
   ]);
 
-  return <RouterProvider router={router}>{children}</RouterProvider>;
+  return <RouterProvider router={router} />;
 }
 
-export default Router;
+export default AppRouter;

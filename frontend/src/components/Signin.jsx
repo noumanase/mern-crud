@@ -16,7 +16,7 @@ function Signin() {
     }));
   };
 
-  const handleSignup = async (e) => {
+  const handleSignin = async (e) => {
     e.preventDefault();
 
     if (!user.name || !user.password) {
@@ -25,8 +25,7 @@ function Signin() {
     }
 
     try {
-      console.log("try block");
-      const res = await fetch("api/user/signin", {
+      const res = await fetch("/api/user/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,17 +34,18 @@ function Signin() {
       });
 
       const data = await res.json();
-      console.log("data signin api response: ", data);
       if (data.success) {
         setUser({ name: "", password: "" });
         navigate("/");
+      } else {
+        alert(data.message || "Sign-in failed");
       }
     } catch (error) {
-      console.log(error);
+      alert("An error occurred during sign-in. Please try again.");
     }
   };
   return (
-    <form onSubmit={handleSignup} style={styles.containerStyle}>
+    <form onSubmit={handleSignin} style={styles.containerStyle}>
       <div>
         <input
           required

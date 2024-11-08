@@ -5,12 +5,13 @@ import {
   getProducts,
   updateProduct,
 } from "../controllers/product.controller.js";
+import verifyJwt from "../middleware/verifyJwt.js";
 
 const router = express.Router();
 
 router.post("/", createProduct);
 
-router.get("/", getProducts);
+router.get("/", verifyJwt, getProducts);
 
 router.put("/:id", updateProduct);
 
