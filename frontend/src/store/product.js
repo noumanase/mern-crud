@@ -1,8 +1,9 @@
 import { create } from "zustand";
 
 export const useProductStore = create((set) => ({
+  error: null,
   products: [],
-
+  setError: (error) => set({ error }),
   setProducts: (products) => set({ products }),
 
   createProduct: async (newProduct) => {
@@ -24,15 +25,24 @@ export const useProductStore = create((set) => ({
   },
 
   fetchProducts: async () => {
+    console.log("inside fetchProducts");
     try {
+      console.log("inside try");
       const res = await fetch("/api/products", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MmRmMzU4NjZjOGE0MDE5MzM2NWE5MiIsIm5hbWUiOiJub3VtYW4xIiwiaWF0IjoxNzMxMDY0ODYyLCJleHAiOjE3MzEwNjg0NjJ9.tcmpBJsRIKYc4od97uclIn-HrBbVVcMaaO-A9J2AQuQ`,
+          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzBjY2JiNWZiYzNkZjczODg1MjA4MiIsIm5hbWUiOiJub3VtYW4iLCJpYXQiOjE3MzEzNTY3NjQsImV4cCI6MTczMTM2MDM2NH0.Xq5C2rczum_JRmRYHIMv2qcP_WbJaJnVst2enclgXaU`,
         },
       });
       const data = await res.json();
+      console.log("got data: ", data);
+
+      if (!data.success) {
+        set({ error: data.message });
+
+        return { success: false, message: data.message };
+      }
       set({ products: data.data });
     } catch (error) {
       console.log("error; , ", error);

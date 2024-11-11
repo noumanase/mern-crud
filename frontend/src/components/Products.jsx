@@ -3,12 +3,13 @@ import { useProductStore } from "../store/product";
 import Product from "./Product";
 
 function Products() {
-  const { products, fetchProducts } = useProductStore();
+  const { error, products, fetchProducts } = useProductStore();
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
+  if (error) return <div>{error}</div>;
   return (
     <div style={{ userSelect: "none", width: "350px", marginBottom: "24px" }}>
       {products.length > 0 &&
