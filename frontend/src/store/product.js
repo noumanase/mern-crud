@@ -1,5 +1,10 @@
 import { create } from "zustand";
-import { createProductApi, fetchProductsApi, deleteProductApi } from "../api";
+import {
+  createProductApi,
+  fetchProductsApi,
+  deleteProductApi,
+  updateProductApi,
+} from "../api";
 
 export const useProductStore = create((set) => ({
   error: null,
