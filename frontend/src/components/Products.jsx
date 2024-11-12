@@ -10,6 +10,7 @@ function Products() {
   }, [fetchProducts]);
 
   if (error) return <div>{error}</div>;
+
   return (
     <div style={{ userSelect: "none", width: "350px", marginBottom: "24px" }}>
       {products.length > 0 &&

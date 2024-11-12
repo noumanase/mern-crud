@@ -26,16 +26,20 @@ function Product({ product }) {
           border: "none",
           height: "45px",
           borderRadius: "6px",
+          paddingLeft: "8px",
         }}
       />
       <div>
         <button
-          style={{ height: "50px" }}
+          style={{ height: "50px", fontSize: "12px" }}
           onClick={() => deleteProduct(product?._id)}
         >
           delete
         </button>
-        <button style={{ height: "50px" }} onClick={handleUpdate}>
+        <button
+          style={{ height: "50px", fontSize: "12px" }}
+          onClick={handleUpdate}
+        >
           update
         </button>
       </div>

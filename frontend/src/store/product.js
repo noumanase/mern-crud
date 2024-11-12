@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createProductApi, fetchProductsApi, deleteProductApi } from "../api";
 
 export const useProductStore = create((set) => ({
   error: null,
@@ -11,34 +12,15 @@ export const useProductStore = create((set) => ({
       return { success: false, message: "Please provide all required fields" };
     }
 
-    const res = await fetch("/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newProduct),
-    });
+    const { data } = await createProductApi(newProduct);
 
-    const data = await res.json();
     set((state) => ({ products: [...state.products, data.data] }));
     return { success: true, message: "Product created successfully" };
   },
 
   fetchProducts: async () => {
     try {
-      console.log(
-        "token from local storage: ",
-        localStorage.getItem("authToken")
-      );
-
-      const res = await fetch("/api/products", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      });
-      const data = await res.json();
+      const { data } = await fetchProductsApi();
 
       if (!data.success) {
         set({ error: data.message });
@@ -52,10 +34,7 @@ export const useProductStore = create((set) => ({
   },
 
   deleteProduct: async (pid) => {
-    const res = await fetch(`/api/products/${pid}`, {
-      method: "DELETE",
-    });
-    const data = await res.json();
+    const { data } = await deleteProductApi(pid);
 
     if (!data.success) return { success: false, message: data.message };
 
@@ -66,15 +45,7 @@ export const useProductStore = create((set) => ({
   },
 
   updateProduct: async (pid, updatedProduct) => {
-    const res = await fetch(`/api/products/${pid}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedProduct),
-    });
-
-    const data = await res.json();
+    const { data } = await updateProductApi(pid, updatedProduct);
 
     if (!data.success) return { success: false, message: data.data };
 

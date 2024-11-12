@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 function Signup() {
   const navigate = useNavigate();
@@ -24,16 +25,7 @@ function Signup() {
       return;
     }
     try {
-      const res = await fetch("api/user/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-
-      const data = await res.json();
-
+      const { data } = await api.post("/user/signup", user);
       if (data.success) {
         setUser({ name: "", password: "" });
         navigate("/signin");

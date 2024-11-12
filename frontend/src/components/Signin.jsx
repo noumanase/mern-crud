@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api";
 
 function Signin() {
   const navigate = useNavigate();
@@ -25,15 +26,8 @@ function Signin() {
     }
 
     try {
-      const res = await fetch("/api/user/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const { data } = await api.post("/user/signin", user);
 
-      const data = await res.json();
       if (data.success) {
         setUser({ name: "", password: "" });
         localStorage.setItem("authToken", data?.data?.token);
