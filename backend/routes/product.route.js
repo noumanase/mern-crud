@@ -9,12 +9,12 @@ import verifyJwt from "../middleware/verifyJwt.js";
 
 const router = express.Router();
 
-router.post("/", createProduct);
+router.post("/", verifyJwt, createProduct);
 
 router.get("/", verifyJwt, getProducts);
 
-router.put("/:id", updateProduct);
+router.put("/:id", verifyJwt, updateProduct);
 
-router.delete("/:id", deleteProduct);
+router.delete("/:id", verifyJwt, deleteProduct);
 
 export default router;

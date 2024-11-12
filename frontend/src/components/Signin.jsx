@@ -36,6 +36,7 @@ function Signin() {
       const data = await res.json();
       if (data.success) {
         setUser({ name: "", password: "" });
+        localStorage.setItem("authToken", data?.data?.token);
         navigate("/");
       } else {
         alert(data.message || "Sign-in failed");

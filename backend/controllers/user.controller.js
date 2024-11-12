@@ -46,12 +46,10 @@ export const signinUser = async (req, res) => {
           { expiresIn: "1h" }
         );
 
-        console.log("token", token);
-
         res.status(200).json({ success: true, data: { ...userFound, token } });
       } else {
         res
-          .status(401)
+          .status(400)
           .json({ success: false, message: "Invalid credentials" });
       }
     } else {
