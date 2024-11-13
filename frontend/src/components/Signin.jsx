@@ -31,12 +31,13 @@ function Signin() {
       if (data.success) {
         setUser({ name: "", password: "" });
         localStorage.setItem("authToken", data?.data?.token);
+        localStorage.setItem("userName", data?.data?._doc?.name);
         navigate("/");
       } else {
         alert(data.message || "Sign-in failed");
       }
     } catch (error) {
-      alert("An error occurred during sign-in. Please try again.");
+      alert(error?.response?.data?.message);
     }
   };
   return (

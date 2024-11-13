@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 function Navbar({ children }) {
   const token = localStorage.getItem("authToken");
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
+    localStorage.clear();
     window.location.reload();
   };
   return (
@@ -19,18 +18,14 @@ function Navbar({ children }) {
           columnGap: "12px",
         }}
       >
-        {/* <Link to={"/"}>Home</Link> */}
-        {token ? (
+        {token && (
           <span>
-            Hello, username.{" "}
+            {`Hello ${localStorage.getItem("userName")}. `}
             <button onClick={handleLogout} style={{ fontSize: "12px" }}>
               Logout
             </button>
           </span>
-        ) : null
-        // <Link to={"/signin"}>Signin</Link>
-        // <Link to={"/signup"}>Signup</Link>
-        }
+        )}
       </div>
       {children}
     </div>
