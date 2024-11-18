@@ -7,6 +7,7 @@ function Navbar({ children }) {
     localStorage.clear();
     window.location.reload();
   };
+
   return (
     <div>
       <div
