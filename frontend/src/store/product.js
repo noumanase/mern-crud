@@ -7,6 +7,7 @@ import {
 } from "../api";
 
 export const useProductStore = create((set) => ({
+  loading: false,
   error: null,
   products: [],
   setError: (error) => set({ error }),
@@ -25,6 +26,7 @@ export const useProductStore = create((set) => ({
 
   fetchProducts: async () => {
     try {
+      set({ loading: true });
       const { data } = await fetchProductsApi();
 
       if (!data.success) {
@@ -35,6 +37,8 @@ export const useProductStore = create((set) => ({
       set({ products: data.data });
     } catch (error) {
       console.log("error; , ", error);
+    } finally {
+      set({ loading: false });
     }
   },
 

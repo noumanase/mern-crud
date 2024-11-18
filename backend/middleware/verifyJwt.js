@@ -8,11 +8,13 @@ function verifyJwt(req, res, next) {
   const header = req.headers["authorization"];
   if (!header) {
     handleApiResponse(res);
+    return;
   }
 
   const token = header.split("Bearer ")[1];
   if (!token) {
     handleApiResponse(res);
+    return;
   }
 
   try {

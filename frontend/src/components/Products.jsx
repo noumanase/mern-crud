@@ -3,11 +3,13 @@ import { useProductStore } from "../store/product";
 import Product from "./Product";
 
 function Products() {
-  const { error, products, fetchProducts } = useProductStore();
+  const { loading, error, products, fetchProducts } = useProductStore();
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  if (loading) return <div style={styles.loadingContainer}>Loading...</div>;
 
   if (error) return <div>{error}</div>;
 
@@ -20,5 +22,14 @@ function Products() {
     </div>
   );
 }
+
+const styles = {
+  loadingContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100px",
+  },
+};
 
 export default Products;
