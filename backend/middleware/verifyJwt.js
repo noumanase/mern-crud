@@ -1,9 +1,5 @@
 import jwt from "jsonwebtoken";
 
-function handleApiResponse(res) {
-  return res.status(401).json({ success: false, message: "Access denied!" });
-}
-
 function verifyJwt(req, res, next) {
   const header = req.headers["authorization"];
   if (!header) {
@@ -24,6 +20,10 @@ function verifyJwt(req, res, next) {
   } catch (error) {
     handleApiResponse(res);
   }
+}
+
+function handleApiResponse(res) {
+  return res.status(401).json({ success: false, message: "Access denied!" });
 }
 
 export default verifyJwt;

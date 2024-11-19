@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 import Product from "../models/product.model.js";
-import upload from "../config/fileUpload.js";
+import upload from "../config/imageUpload.js";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.resolve(path.dirname(__filename), "../../");
 
 export const createProduct = async (req, res) => {
   try {
@@ -73,20 +79,36 @@ export const deleteProduct = async (req, res) => {
   }
 
   try {
-    await Product.findByIdAndDelete(id);
-    res
-      .status(200)
-      .json({ success: true, message: "Product deleted successfully" });
+    const product = await Product.findById(id);
+
+    if (product) {
+      const imagePath = path.join(__dirname, "", product.image);
+
+      await Product.findByIdAndDelete(id);
+
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          console.log("Error deleting image from /uploads directory: ", err);
+          return res.status(500).json({
+            message: "Product deleted, but failed to delete the image",
+          });
+        }
+      });
+
+      res
+        .status(200)
+        .json({ success: true, message: "Product deleted successfully" });
+    }
   } catch (error) {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 
-export const uploadSingleImg = () => (req, res) => {
-  try {
-    const fileUrl = `/uploads/${req.file.filename}`;
-    res.status(200).json({ success: true, data: fileUrl });
-  } catch (error) {
-    res.status(500).json({ success: false, message: "Internal Server Error" });
-  }
-};
+// export const uploadSingleImg = () => (req, res) => {
+//   try {
+//     const fileUrl = `/uploads/${req.file.filename}`;
+//     res.status(200).json({ success: true, data: fileUrl });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: "Internal Server Error" });
+//   }
+// };

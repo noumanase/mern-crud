@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../axios";
 
 function Signin() {
-  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     password: "",
@@ -29,10 +28,10 @@ function Signin() {
       const { data } = await api.post("/user/signin", user);
 
       if (data.success) {
-        setUser({ name: "", password: "" });
         localStorage.setItem("authToken", data?.data?.token);
         localStorage.setItem("userName", data?.data?._doc?.name);
-        navigate("/");
+        window.location.reload();
+        // setUser({ name: "", password: "" });
       } else {
         alert(data.message || "Sign-in failed");
       }
