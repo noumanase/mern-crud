@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProductStore } from "../store/product";
+import { backendUrl } from "../constants/index";
 
 function Product({ product }) {
   const { deleteProduct, updateProduct } = useProductStore();
@@ -18,6 +19,13 @@ function Product({ product }) {
         alignItems: "center",
       }}
     >
+      <img
+        src={`${backendUrl}${product?.image}`}
+        alt={product?.name}
+        width={70}
+        style={{ cursor: "pointer" }}
+        onClick={() => window.open(`${backendUrl}${product?.image}`, "_blank")}
+      />
       <input
         type="text"
         value={name}
@@ -27,21 +35,25 @@ function Product({ product }) {
           height: "45px",
           borderRadius: "6px",
           paddingLeft: "8px",
+          marginBottom: "8px",
         }}
       />
-      <div>
-        <button
-          style={{ height: "50px", fontSize: "12px" }}
+      <div
+        style={{
+          display: "flex",
+          columnGap: "8px",
+          alignItems: "center",
+        }}
+      >
+        <span
+          style={{ cursor: "pointer" }}
           onClick={() => deleteProduct(product?._id)}
         >
-          delete
-        </button>
-        <button
-          style={{ height: "50px", fontSize: "12px" }}
-          onClick={handleUpdate}
-        >
-          update
-        </button>
+          ❌
+        </span>
+        <span style={{ cursor: "pointer" }} onClick={handleUpdate}>
+          🔄
+        </span>
       </div>
     </div>
   );

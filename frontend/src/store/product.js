@@ -14,10 +14,6 @@ export const useProductStore = create((set) => ({
   setProducts: (products) => set({ products }),
 
   createProduct: async (newProduct) => {
-    if (!newProduct.name || !newProduct.price || !newProduct.image) {
-      return { success: false, message: "Please provide all required fields" };
-    }
-
     const { data } = await createProductApi(newProduct);
 
     set((state) => ({ products: [...state.products, data.data] }));
