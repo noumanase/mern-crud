@@ -69,3 +69,15 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
+
+export const uploadSingleImg = () => (req, res) => {
+  try {
+    console.log("inside uplaodsingle img", req);
+    const fileUrl = `/uploads/${req.file.filename}`;
+    res.status(200).json({ success: true, data: fileUrl });
+    console.log("inside uplaodsingle img");
+  } catch (error) {
+    console.log("upload img error", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};

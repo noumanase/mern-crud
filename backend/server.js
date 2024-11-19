@@ -14,6 +14,8 @@ const __dirname = path.resolve(); // root directory location
 
 app.use(express.json()); // allows to use JSON data in the req.body
 
+app.use("/uploads", express.static(path.join(__dirname, "/uploads"))); // we can fetch stored images from this directory as http://localhost/uploads/image.jpg
+
 app.use("/api/user", userRouter);
 app.use("/api/products", productRouter);
 
