@@ -17,6 +17,7 @@ function AppRouter() {
     [
       {
         path: "/",
+        errorElement: <p>404 Not found!</p>,
         element: (
           <ProtectedRoute
             element={

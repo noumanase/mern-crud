@@ -14,10 +14,17 @@ export const useProductStore = create((set) => ({
   setProducts: (products) => set({ products }),
 
   createProduct: async (newProduct) => {
-    const { data } = await createProductApi(newProduct);
+    try {
+      const { data } = await createProductApi(newProduct);
 
-    set((state) => ({ products: [...state.products, data.data] }));
-    return { success: true, message: "Product created successfully" };
+      set((state) => ({ products: [...state.products, data.data] }));
+      return { success: true, message: "Product created successfully" };
+    } catch (error) {
+      return {
+        success: false,
+        message: error?.response?.data?.message || error.message,
+      };
+    }
   },
 
   fetchProducts: async () => {
